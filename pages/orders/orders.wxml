@@ -1,0 +1,46 @@
+<!--pages/order/order.wxml-->
+<view class = "pClassorder" style='background: #f4f3f3;overflow:scroll'>
+    <block wx:if = "{{orderPro.length>0}}">
+    <scroll-view class = "scroll" scroll-y ="true">
+        <block wx:for = "{{orderPro}}">
+            <view class = "orderViewClass" bindtap='btn_information' data-item = "{{item}}">              
+               <view class = "shopNamClass">
+                  <view class="box">
+                      <text class = "text1">{{item.storeName}}</text>
+                      <text class="order_type" style="background:{{color}}">{{item.orderType_}}</text>
+                  </view>
+                  <view>
+                      <text class = "text2">{{item.createTime}}</text>
+                      <image class="right-icon" src="../../images/07_icon_right.png"></image>
+                      <text class = "text4">{{item.statusName}}</text>
+                  </view>  
+                  </view>
+                  <view class="separator"></view>
+                  <view class="sumprice">¥ {{item.totalPrice}}</view>
+                  <text class="take_num" wx:if="{{item.sn&&(item.orderType==2||item.orderType==4)&&item.status!=1&item.status!=100&item.status!=-1}}" style="color:#333;font-size:14px">取餐号：</text>
+                  <text style="color:rgb(210,177,152);font-size:14px;left:65px" class="take_num" wx:if="{{item.sn&&(item.orderType==2||item.orderType==4)&&item.status!=1&item.status!=100&item.status!=-1}}">{{item.sn}}</text>
+            </view>
+        </block>
+    </scroll-view>
+    </block>
+    <block wx:else>
+            <view class="gapViewClass" style="height:800px;background-color:#f5f5f5">
+             <image src="../../images/img_no1.png" style="height:{{(sysWidth-80)*0.73}}px;width:{{sysWidth-80}}px;margin-left: 40px;margin-top: 40px;"></image>
+            </view>
+          </block>
+</view>
+
+
+<view class = "commodityScreenClass" hidden='{{isViewDisabled}}' style='opacity: 0' ></view>
+
+<!-- <view class = "commodityScreenClass" hidden='{{isLoading}}'></view> -->
+<view class = "commodityScreenClass" hidden='{{isNotAddress_}}'></view>
+<view class = "notAddress_" style='border-radius:10px;' hidden='{{isNotAddress_}}'>
+    <text class = "title_">提示</text>
+    <view class = "content_">
+       <text>小程序将申请获取您的信息用于快捷登录，请选择[确认授权]</text>
+    </view>
+      <button size="default"  class="confirm_" catchtap="cancelBox">取消</button>
+    <button class = "confirm_" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确认</button>
+    <view style="clear:both;"></view>
+</view>

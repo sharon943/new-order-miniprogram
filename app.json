@@ -1,0 +1,70 @@
+{
+  "pages": [
+    "pages/menu/menu",
+    "pages/chooseCoupon/chooseCoupon",
+    "pages/member/getUserAgreement/getUserAgreement",
+    "pages/member/RechargeRecord/RechargeRecord",
+    "pages/member/about/about",
+    "pages/member/equits/equits",
+    "pages/my/my",
+    "pages/member/wallet/wallet",
+    "pages/member/changepwd/changepwd",
+    "pages/help/help",
+    "pages/orders/orders",
+    "pages/shops/shops",
+    "pages/city/city",
+    "pages/address/address",
+    "pages/addAddress/addAddress",
+    "pages/map/map",
+    "pages/send/send",
+    "pages/huiyuanma/huiyuanma",
+    "pages/reCharge/reCharge",
+    "pages/mycoupons/mycoupons",
+    "pages/information/information",
+    "pages/usernote/usernote",
+    "pages/person/person",
+    "pages/member/levelPreferential/levelPreferential",
+    "pages/Nearshops/Nearshops"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "茶理宜世",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#bbb",
+    "selectedColor": "#333",
+    "borderStyle": "white",
+    "backgroundColor": "#f4f3f3",
+    "list": [
+      {
+        "selectedIconPath": "images/home.png",
+        "iconPath": "images/home_1.png",
+        "pagePath": "pages/menu/menu",
+        "text": "点餐"
+      },
+      {
+        "selectedIconPath": "images/order.png",
+        "iconPath": "images/order_1.png",
+        "pagePath": "pages/orders/orders",
+        "text": "订单"
+      },
+      {
+        "selectedIconPath": "images/my.png",
+        "iconPath": "images/my_1.png",
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "navigateToMiniProgramAppIdList": [
+    "wx4f8e92f3c8f5a1dd"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "您的定位将用来获取附近门店"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

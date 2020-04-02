@@ -1,0 +1,32 @@
+<!--pages/address/address.wxml-->
+<view class="bgBox" style=''>
+<view wx:if="{{addressPro.length>0}}" style="margin-top:5px;background-color:#f4f3f3;min-height:{{minheight}}px;overflow:scroll">
+<view class="list" wx:for="{{addressPro}}" data-item="{{item}}" bindtap="choose_address">
+<view class="left">
+<text class="address">{{item.address}}</text>
+<view class="name"><text>{{item.receiverName}}</text><text wx:if="{{item.sexname}}">{{item.sexname}}</text><text style="margin-left:12px">{{item.receiverPhone}}</text></view>
+</view>
+<view class="right" data-item="{{item}}" catchtap="editor">
+<image  src="../../images/address/rewrite.png"></image>
+</view>
+</view>
+</view>
+<view wx:else  style="height:{{minheight}}px">
+<image src="../../images/address/addressmo.png" style="height:{{(sysWidth-80)*0.73}}px;width:{{sysWidth-80}}px;margin-left: 40px;margin-top: 40px;"></image></view>
+
+<view class="editAdress"  bindtap="btn_add_adress" >添加地址</view>
+</view>
+<view class = "commodityScreenClass" hidden='{{isNotAddress_}}'></view>
+<view class = "notAddress_" style='border-radius:10px;' hidden='{{isNotAddress_}}'>
+    <text class = "title_">提示</text>
+    <view class = "content_">
+       <text>小程序将申请获取您的信息用于快捷登录，请选择[确认授权]</text>
+    </view>
+      <button size="default" class="confirm_" catchtap="cancelBox">取消</button>
+    <button class = "confirm_" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确认</button>
+    <view style="clear:both;"></view>
+</view>
+<view class= "toast" hidden='{{isToast}}'>
+    <text class = "content">{{toastData}}</text>
+    <view style="clear:both;"></view>
+</view>

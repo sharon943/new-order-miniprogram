@@ -1,0 +1,38 @@
+<!--pages/huiyuanma/huiyuanma.wxml-->
+<view class='input-box'>
+     <view class='erweima'>
+         <canvas canvas-id="qrcode" />
+		 </view>
+		 <view class='tiaoxingma'>
+				<canvas canvas-id="barcode" />
+				<text>{{codeStr}}</text>
+		 </view>
+</view>
+<image src='../../images/refresh.jpg' class='refresh' bindtap='refreshbutton'></image>
+<view class='bottom'>
+<view class="Vcards normalVcards {{isIphoneX == true ? 'xVcards' : ''}} {{isIphone5 == true ? 'fiveVcards' : ''}}" wx:if="{{showVcards}}" catchtap='showcards' style='position:relative;padding:0 8px;margin-bottom:{{cardHei}}px;'>
+    <image class='backGround' src='{{defaultcard.backGround}}'></image>
+    <view style='margin-top:{{isIphone5 ? -10:-5}}px'>
+    <text class='title bgTitle' style=''>{{defaultcard.title}}</text>
+		<text class='money' style='color:#c8ad84; margin-left:10px;margin-right:10px'>￥{{defaultcard.balance}}</text>
+    <image class='down' src='../../imgs/down.jpg'></image>
+    </view>
+		
+	
+</view>
+
+  <text style='line-height:70px;font-size:13px;color:#a0a0a0'>会员码每两分钟自动更新</text> 
+</view>
+<!-- <view class = "commodityScreenClass" hidden='{{!taocan_detail_view}}'></view> -->
+	<view class="Vcards showcards2 {{isIphone5 == true ? 'showcards3' : ''}} {{isIphoneX == true ? 'showcards4' : ''}}" wx:if="{{!isshow}}">
+  <view class='topvcard'><text>选择支付方式</text><image class='cha'  src='../../imgs/POP_close01.png' bindtap='cha'></image></view>
+  <!-- <> -->
+ <view class="kabao {{isIphone5 == true ? 'kabao3' : ''}} {{isIphoneX == true ? 'kabao4' : ''}}" style='overflow:scroll'>
+					<view class='vcard_' wx:for="{{mycards}}" style='display:flex;justify-content:space-between;padding:0 8px;' data-item="{{item}}" catchtap='changedefault'>
+								<image class='backGround' src='{{item.backGround}}'></image>
+                <text class='title'>{{item.title}}</text>
+								<text class='money' style='line-height:55px'>￥{{item.balance}}</text>
+						</view>
+    </view>
+     </view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>

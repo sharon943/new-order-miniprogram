@@ -1,0 +1,42 @@
+<!--pages/member/equits/equits.wxml-->
+<view style="background:#f4f3f3;height:{{isIpx?sh-88:sh-65}}px">
+  <view class="current-equit">
+    <text>{{memberData.name}}</text>
+    <view class="cardBox" style="color:{{levelNum==3?'#000':'#fff'}}">
+      <image class="card" src="{{background}}"></image>
+      <view class="cardText">
+        <text>Lv.{{levelNum}}</text>
+        <text>{{memberData.levelName}}</text>
+        <text>当前累计灵气值{{memberData.experience}}/{{upperExperience}}</text>
+        <progress percent="{{percent_}}" activeColor="#73bba8" border-radius="2" backgroundColor="#eee" class="progress"/>
+      </view>
+    </view>
+    <view class="service_box">
+      <view class="box-title">
+        <text class="line"></text>
+        <text class="modle_title">灵气权益</text>
+      </view>
+      <view class="serviceLogoBox">
+        <view wx:for="{{equits}}">
+          <image src="{{item[1]}}"></image>
+          <text>{{item[0]}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="exp">
+    <view class="service_box">
+      <view class="box-title">
+        <text class="line"></text>
+        <text class="modle_title">灵气说明</text>
+        <navigator url='../levelPreferential/levelPreferential' class="more">更多</navigator>
+      </view>
+      <view class="serviceLogoBox">
+        <view wx:for="{{exp}}" data-item="{{item}}">
+          <image src="{{item.logo}}"></image>
+          <text>{{item.name}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

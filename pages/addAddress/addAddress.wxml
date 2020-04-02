@@ -1,0 +1,40 @@
+<!--pages/addressRevise/addressRevise.wxml-->
+<view class="bgBox" style="background-color:#f4f3f3;min-height:{{minheight}}px;">
+<view class="pClass" style='background: #f2f2f2;'>
+  <form bindsubmit='btn_submit'>
+    <view class="add">
+      <view class="inputView">
+        <text>联系人</text>
+        <input placeholder='请填写收货人姓名' name = "name" value="{{revisePro ? revisePro.receiverName : ''}}" bindinput='input_name'></input>             </view>
+        <!-- <view class="inputView"> -->
+        <!-- <text>性别</text>
+        <input placeholder='请填写收货人性别' name = "sex" value="{{revisePro ? revisePro.sexname : ''}}" bindinput='input_sex'></input>              </view> -->
+      <view class="inputView">
+        <text>手机号</text>
+        <input placeholder='请填写收货人手机号' name = "phone" maxlength='11' type='number' value="{{revisePro ? revisePro.receiverPhone : ''}}" bindinput='input_phone'></input>
+        
+      </view>
+      <view class="city" bindtap='btn_location_address'>
+        <text class="name">收货地址</text>
+        <input class="address" placeholder='请输入您的收货地址' value="{{locationAddress ? locationAddress : revisePro.receiverAddress}}"></input>
+        <image style="width:11px;height:18px" src='../../images/07_icon_right.png'></image>
+      </view>
+      <view class="inputView">
+        <text>门牌号</text>
+        <input placeholder='例：B座304室' name = "address" value="{{revisePro ? revisePro.appendReceiverAddress : ''}}" bindinput='input_address'></input>
+        
+      </view>
+      <view class="bottom">
+       <text class=" del" style="color:#898989;background-color:#e7e7e7" wx:if="{{revisePro.aid}}" bindtap="del" >删除地址</text>
+      <text class="editAdress {{!revisePro.aid ? 'editAdressOne' : ''}}" bindtap='submit'>保存地址</text>
+      </view>
+    </view>
+  </form>
+</view>
+</view>
+<view class= "toast" hidden='{{isToast}}'>
+    <text class = "content">{{toastData}}</text>
+    <view style="clear:both;"></view>
+</view>
+
+<view class = "commodityScreenClass" hidden='{{isViewDisabled}}' style='opacity: 0' ></view>

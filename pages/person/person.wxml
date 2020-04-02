@@ -1,0 +1,34 @@
+
+<!--pages/information/information.wxml-->
+<view class="bgBox" style="min-height:{{minheight}}px;">
+<view class="add">
+ <view class="inputView" style="margin-top:5px">
+        <text>昵称</text>
+        <input placeholder='请填写姓名' name = "name" value="{{memberData ? memberData.compellation : ''}}" bindinput='input_name'></input>             </view>
+<view class="inputView">
+        <text>手机号</text>
+        <input disabled placeholder='请填写收货人手机号' name = "phone" maxlength='11' type='number' value="{{memberData ? memberData.phone : ''}}" bindinput='input_phone'></input>
+ </view> 
+ <view class="inputView">
+        <text>性别</text>
+        <radio-group class="radio-group" bindchange='btn_sex'>
+  <label class="radio" wx:for="{{items}}" style='color: #333333;'>
+  <radio value="{{item.name}}" checked="{{item.checked}}" color="#CAA284"/>{{item.value}}</label></radio-group>  
+    </view>
+    <view class="inputView">
+        <text>生日</text>
+       <view class="section">
+        <text class="picke" style="color:{{isBirthday?'#c3c3c3':'#575757'}} ">
+             {{Datevalue?Datevalue:'请选择生日,一经选择不可修改'}}
+        </text> 
+        <block wx:if="{{!isBirthday}}">
+          <picker  mode="date"  value="{{date}}" start="1900-09-01" end="{{maxTime}}"  bindchange="bindDateChange">
+          <view class="picker" style='border:none'></view>         
+          </picker>
+        </block>
+      </view>  
+ </view>  
+</view>
+<view class="{{ischange==1 ? 'submit' : 'nochange'}}" bindtap="submit">保存</view>  
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>

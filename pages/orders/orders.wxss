@@ -1,0 +1,60 @@
+/* pages/order/order.wxss */
+.scroll{
+  padding-top: 8px;width: 100%;height: calc(100% - 8px);
+}
+.pClassorder{
+  width: 100%;overflow: scroll;
+}
+.scroll .orderViewClass{
+  width: 100%;background: white;margin-bottom: 8px;position: relative
+}
+.scroll .orderViewClass .image1{
+  width: 70px;height: 70px;margin-top: 15px;margin-left: 15px;float: left;
+}
+.scroll .orderViewClass .shopNamClass{
+  padding-left: 16px;position: relative;height: 95px;
+}
+.scroll .orderViewClass .shopNamClass .text1{
+  display: block;float: left;font-size: 16px;color: #333;width: 100%;margin-top: 25px;
+}
+.scroll .orderViewClass .shopNamClass .text2{
+  display: block;float: left;font-size: 14px;color: #898989;margin-top: 15px;
+}
+.sumprice{
+  display: block;font-size: 17px;color: #333;text-align: right;padding: 0 16px;height:45px;line-height: 45px;font-weight: bold;
+}
+.separator{
+  width: calc (100% - 15px);height: 1px;background: #eee;margin-left:15px;
+}
+.box{
+  display: flex;justify-content: space-between
+}
+.right-icon{
+  width: 5px;
+height: 12px;
+float: right;
+margin-top: 22px;margin-right:16px;
+
+}
+.order_type{
+  width: 120px;
+margin-top: 25px;
+text-align: center;
+border-radius: 15px 0 0 15px;height: 25px;
+line-height: 25px;
+font-size: 14px;color: #fff;
+
+
+}
+.scroll .orderViewClass .shopNamClass .text4{
+  display: block;float: right;font-size: 14px;color: #333;margin-top:18px;margin-right: 5px
+}
+.scroll .orderViewClass .shopNamClass .text4_{
+  display: block;float: left;font-size: 13px;color: #000;position: absolute;bottom: 15px;right: 5px;margin-right:10px;
+}
+.take_num{
+  position: absolute;bottom:14px;left:16px
+}
+.commodityScreenClass {
+background-color: rgba(0,0,0,0.3);
+}

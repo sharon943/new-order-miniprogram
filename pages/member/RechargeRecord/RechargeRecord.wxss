@@ -1,0 +1,85 @@
+/* pages/member/RechargeRecord/RechargeRecord.wxss */
+.noRecord image{
+   width: 150px;height: 130px;margin:150px auto 10px;display: block
+}
+.noRecord text{
+  width: 100%;text-align: center;font-size: 16px;display: block
+}
+
+/* pages/record/record.wxss */
+.headstyle{
+    width:calc(100%);
+    overflow:hidden;
+    white-space:nowrap;
+    height:45px;
+    border:1px solid #eeeeee;
+    border-left: none;
+    border-right: none;
+    margin-top:5px;
+
+}
+.one{
+  width: 90px;display: inline-block;margin-right: 45px;height: 43px;line-height: 43px;font-size: 13px;color: #b5b5b5;
+}
+#consume{
+  margin-left: 15px;
+}
+ #time{
+  width:20px;
+  height:20px;
+  display:inline-block;
+  overflow:hidden;
+  right: 15px;
+  margin-top:-28px;
+  position:absolute;
+  float:right;
+
+}
+#loading{
+  display: block;margin:0 auto;margin-top:200px;width: 130px;height:130px;
+}
+.picke{
+      position:absolute;
+      right:50px;
+      margin-top:-49px;
+      font-size:15px;
+      color: #b5b5b5;
+}
+.title{
+  font-size:16px;color: #333
+}
+.topnav{
+  color: #707070
+}
+.icon{
+  /* width: 5px;background-color: #c8ad84;height: 10px; margin: auto 5px;color: #c8ad84; */
+  width: 5px;background-color: #c8ad84 ;height: 15px; margin: auto 5px;color: #fff ;position:absolute;
+top:21px;
+}
+.whole{
+  padding: 20px 0;height: 65px;border-bottom:1px solid #f7f7f7;
+}
+.box{
+  padding: 0px 0 0px 15px;cursor: pointer;
+
+}
+.exp-text{
+color:#b5b5b5;font-size: 15px;
+}
+.exp-text text{
+  font-size: 13px;margin:5px 0 0 0;
+}
+.consu{
+  font-weight: bold;font-size: 24px;line-height: 86px;color: #575757;height: 86px
+}
+.assess{
+  font-size: 12px;
+  color: #c8ad84!important;
+
+}
+.time{
+  cursor: pointer;
+}
+.topnav1{
+  color: #707070
+}

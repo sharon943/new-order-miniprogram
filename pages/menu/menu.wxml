@@ -1,0 +1,692 @@
+<!--pages/menu/menu.wxml-->
+<view class="container">
+	<view class="head">
+		<view class="head-left">
+		  <view class="head-leftTop" >
+        <block wx:if='{{!hasnoShops}}'>
+			  	<text bindtap="go_store">{{activeindex==0?shopPro.storeName:address}}</text>
+        </block>
+        <block wx:else>
+          <navigator url="../city/city" style="display:inline-block;margin-right:5px;">请选择下单门店</navigator>
+        </block>
+				<image src="../../images/menu-right.png"></image>
+		  </view>
+      
+		</view>
+		<view class="head-right {{activeindex==0?'active':''}}" bindtap="changeMode">
+      <view class="toggle"></view>
+			<text wx:for="{{modes}}" class="{{index==activeindex?'activeI':''}}"  wx:for-index="index" data-index="{{index}}">{{item}}</text>
+		</view>
+	</view>
+  <view class="shop-info">
+      <block wx:if="{{typeValue==2}}">
+        <text>{{latitude?distance:'未获取到您的定位信息'}}</text>
+      </block>
+      <block wx:else>
+        <navigator url="../Nearshops/Nearshops" wx:if="{{typeValue==1}}" class="sendShopInfo" bindtap="moreSendShopsView">由 <text>{{shopPro.storeName}}</text> 送出外卖</navigator>
+      </block>
+      
+      <block wx:if="{{shopDetailView&&!hasnoShops}}">
+        <view bindtap="shopDetail"> 
+            <text>更多门店信息</text>
+            <image src="../../images/coupon/close.png"></image>      
+        </view> 
+      </block>
+      <block wx:if="{{!shopDetailView&&!hasnoShops}}">
+        <view bindtap="shopDetail"> 
+            <text>收起</text>
+            <image src="../../images/coupon/open.png"></image>      
+        </view> 
+      </block>
+  </view>
+	<view class="TypeViewClass" style="{{allMenu['menuNum'] > 0?'height: calc(100% - 127px)' : ''}}">
+    <scroll-view scroll-y="true" class="TypeScrollClass" scroll-into-view="{{curleftview}}" scroll-with-animation='true'>
+      <view>
+        <view wx:if="{{discountMenu.length > 0}}" class="TypeClass" catchtap="btnDiscount" data-item="{{item}}" data-index="{{index}}">
+          <block wx:if="{{typePro['menuTypeId'+item.uid]}}">
+            <text class="typeNumClass">{{typePro['menuTypeId'+item.uid]}}</text>
+          </block>
+          <text class="{{Discounttype == 1? 'typeNameRedClass':'typeNameClass'}}" style='color:red;'>折扣</text>
+        </view>
+      </view>
+      <view style="" wx:for="{{menuDataPro}}" id="list{{item.uid}}" wx:key="uid">
+        <view class="TypeClass" catchtap="btnType" data-item="{{item}}" data-index="{{index}}">
+          <block wx:if="{{typePro['menuTypeId'+item.uid]}}">
+            <text class="typeNumClass">{{typePro['menuTypeId'+item.uid]}}</text>
+          </block>
+          <view class="{{typeId == item.uid ? 'typeNameRedClass':'typeNameClass'}}"> <image wx:if="item.typeImage" src="{{item.typeImage}}" style="width:20px;height:20px;vertical-align: bottom;"></image>
+         <text>{{item.name}}</text> 
+         <text class="nameEn">{{item.nameEn}}</text>
+          </view>
+        </view>
+      </view>
+			<!-- <view class="button-group {{isIpx?'fix-iphonex-button':''}}"></view> -->
+    </scroll-view>
+  </view>
+	<view class="GoodsViewClass" style="{{allMenu['menuNum'] > 0?'height: calc(100% - 142px)' : 'height: calc(100% - 92px)'}}">
+    <block wx:if = "{{!shopPro.isServiceTime&!hasnoShops}}">
+      <view class = "business" >
+        <text>商家休息中</text> 
+      </view>
+    </block>
+    <scroll-view scrollY scrollAnimationDuration="80"  class="GoodsScrollClass" scrollWithAnimation style="height:{{allMenu['menuNum'] > 0 ? (sy-254) : (sy-204)}}px"  scroll-into-view="{{curlistview}}"  bindscroll='scrollcontent'>
+    <!-- <swiper style="width:100%;height:{{(systWidth-75)/2}}px;" indicator-dots="true" autoplay="true" interval="5000" duration="1000" indicator-active-color="#fff" indicator-color="rgba(255, 255, 255, .3)">
+      <block wx:for="{{dataPro.topBannerList}}" wx:for-index="index">
+        <swiper-item>
+          <image src="{{item.picUrl}}" style="width:100%;height:100%;vertical-align: middle;" mode="aspectFill" bindtap='btn_shop' data-item='{{item}}'/>
+        </swiper-item>
+      </block>
+    </swiper> -->
+    <view class="topBanner">
+      <block wx:for="{{dataPro.topBannerList}}" wx:for-index="index" wx:key="picUrl"  wx:if="{{index<2}}">
+      <image src="{{item.picUrl}}" style="height:{{(sw)/2}}px;vertical-align: middle;" mode="aspectFill" bindtap='btn_shop' data-item='{{item}}'/>
+      </block>
+    </view>
+    <view wx:for="{{menuDataPro}}" id="list{{categroy.uid}}" wx:key="uid" wx:for-item="categroy" >
+     <view class="goodstype">{{categroy.name}} {{categroy.nameEn}}</view>
+      <view wx:if="{{Discounttype==0}}">
+        <block wx:for="{{categroy.products}}" wx:key="uid" wx:for-item="row">
+          <view class="GoodsClass" bindtap='btn_image' data-item = "{{row}}">
+            <image class="GoodsImageClass" src="{{row.logo?row.logo:'../../images/menu/logo.png'}}" mode="aspectFill"  />
+            <view class="GoodsSMClass">
+              <text class="NameClass">{{row.name}}</text>
+              <text class="labelName" wx:if="{{row.isSpecialty}}">招牌饮品</text>
+              <text class="labelName" wx:if="{{row.isNew}}">新品</text>
+              <text class="labelName" wx:if="{{row.isSideDish}}">配菜</text>
+              <text class="labelName" wx:if="{{row.isSpicy}}">辣</text>
+              <block wx:if = "{{typeNum == 1&&isBusiness}}">
+                <text class="desc">{{row.desc}}</text>
+              </block>                       
+              <block class="PriceClass" style="position:relative;">
+                <block wx:if="{{row.activityPrice!=undefined}}">
+                  <view style='position:absolute;top:65px;left:93px;display:flex;height:16px;'>
+                    <text style="font-size:16px;color:red;line-height:20px;margin-right:3px;">¥</text>
+                    <text style="color:red;margin-right:2px;line-height:20px;">{{row.activityPrice}}</text>
+                    <text style='color:#666;text-decoration: line-through;font-size: 12px;margin-top:1px;margin-left:3px;line-height:20px;'>¥{{row.Vprice}}</text>
+                  </view>
+                  <view wx:if="{{row.isFirstOrder==1}}" style="display:flex;width:100%;height:14px;position:absolute;top:86px;left:93px;" > 
+                    <image style='width:12px;height:12px;margin-right:2px;margin-top:1px;' src='../../images/menu/discount.png'></image>
+                    <text style='color:#FC7C85;font-size:12px;width:80%;line-height:14px;'>新用户专享</text>                      
+                  </view>
+                </block>
+                <block wx:else><text class="goods_price">￥{{row.price}}</text> </block>
+              </block>
+            </view>
+            <block wx:if = "{{typeNum == 1}}"> 
+              <block wx:if = "{{shopPro.isServiceTime || typeValue == 2 || typeValue == 3|| typeValue == 4}}}">
+                <view class="ImageButtonViewClass">
+                  <block wx:if="{{row.isInServiceTime}}">
+                    <block wx:if="{{row.isSoldOut}}">
+                      <text class = "text1" style="color:#898989;float: right;margin-right: 19px;background: #fff;">商品已售罄</text>
+                    </block>
+                  <block wx:elif="{{row.type==2}}">
+							    	<text class = "text1 textspe" data-item="{{row}}" catchtap='btn_image' data-typyid="{{categroy.uid}}" style='float: right;margin-right: 19px;height: 22px;'>选套餐</text>
+								  </block>
+                  <block wx:elif="{{row.isRequirement}}">
+							    	<text class = "text1 textspe" data-item="{{row}}" catchtap='btn_image' data-typyid="{{categroy.uid}}" style='height: 22px;float: right;margin-right: 19px;'>选规格</text>
+								  </block>
+                  <block wx:else>
+                   <image class="addViewClass" src="../../images/add.png" catchtap="btnImageAdd" data-hi='{{row.price}}' data-item="{{row}}" data-typyid="{{categroy.uid}}"></image>
+                    <text>{{menuProArray['menuId'+row.uid]['numdata']}}</text>
+                    <image class="subViewClass" src="../../images/sub.png" class="subViewClass" data-item="{{row}}" catchtap="btnImageSub" hidden="{{menuProArray['menuId'+row.uid]? false : true}}" ></image>
+                  </block>
+                </block>
+                <block wx:else>
+                    <text class = "text1" style="background:#fff;color:#898989">餐品不在供应时间</text>
+                </block>
+              </view>
+            </block>
+            <block wx:else></block>
+          </block>
+        </view>
+       </block>
+      </view>
+      <view wx:elif="{{Discounttype==1}}">
+        <block wx:for="{{discountMenu}}" wx:key="id">
+          <view class="GoodsClass" bindtap='btn_image' data-item = "{{item}}">
+            <image class="GoodsImageClass" src="{{item.logo?item.logo:'../../images/menu/logo.png'}}" mode="aspectFill"  />
+            <view class="GoodsSMClass">
+              <text class="NameClass">{{item.name}}</text>
+              <text class="labelName" wx:if="{{row.isSpecialty}}">招牌饮品</text>
+              <text class="labelName" wx:if="{{row.isNew}}">新品</text>
+              <text class="labelName" wx:if="{{row.isSideDish}}">配菜</text>
+              <text class="labelName" wx:if="{{row.isSpicy}}">辣</text>
+              <block wx:if = "{{typeNum == 1&&isBusiness}}">
+                <text class="desc">{{item.desc}}</text>
+                <block wx:if = "{{item.sales != 0}}">
+                <!-- <text class="buyNumber">月销 {{item.sales}}</text> -->
+                </block>
+                <block>
+                  <text class="buyNumber">   </text>
+                </block>
+              </block>        
+              <block class="PriceClass" style="position:relative;">
+                <block wx:if="{{item.value > 0}}">
+                  <view style='position:absolute;top:65px;left:93px;display:flex;height:16px;'>
+                    <text style="font-size:16px;color:red;line-height:20px;margin-right:3px;">¥</text>
+                    <text style="color:red;margin-right:2px;line-height:20px;">{{item.activityPrice}}</text>
+                    <text style='color:#666;text-decoration: line-through;font-size: 12px;margin-top:1px;margin-left:3px;line-height:20px;'>¥{{item.Vprice}}</text>
+                  </view>
+                  <view wx:if="{{productActicty.isFirstOrder==1}}" style="display:flex;width:100%;height:14px;position:absolute;top:86px;left:93px;" > 
+                    <image style='width:12px;height:12px;margin-right:2px;margin-top:1px;' src='../../images/menu/discount.png'></image>
+                      <text style='color:#FC7C85;font-size:12px;width:80%;line-height:14px;'>新用户专享</text>                   
+                  </view>
+                </block>
+                <block wx:else><text class="goods_price">￥{{item.price}}</text></block>
+            </block>  
+          </view>
+          <block wx:if = "{{typeNum == 1}}"> 
+            <block wx:if = "{{shopPro.isServiceTime || typeValue == 2 || typeValue == 3|| typeValue == 4}}">
+              <view class="ImageButtonViewClass">
+                <block wx:if="{{item.isInServiceTime}}">
+                  <block wx:if="{{item.isSoldOut}}">
+                    <text class = "text1" style="color:#898989;float: right;margin-right: 19px;background: #fff;">商品已售罄</text>
+                  </block>
+                  <block wx:elif="{{item.type==2}}">
+                      <text class = "text1 textspe" data-item="{{item}}" catchtap='btn_image' data-typyid="{{categroy.uid}}" style='background:{{color}};'>选套餐</text>
+                  </block>
+                  <block wx:elif="{{item.isRequirement}}">
+                    <text class = "text1 textspe" data-item="{{item}}" catchtap='btn_image' data-typyid="{{categroy.uid}}" style='height: 22px;float: right;margin-right: 19px;'>选规格</text>
+                  </block>
+                  <block wx:else>
+                  <image class="add" catchtap="btnImageAdd" data-item="{{item}}" data-typyid="{{categroy.uid}}" class="addViewClass" src="../../images/add.png" ></image>
+ <text>{{menuProArray['menuId'+item.uid]['numdata']}}</text>
+                   <image class="addViewClass" data-item="{{item}}" catchtap="btnImageSub" class="subViewClass" src="../../images/sub.png" hidden="{{menuProArray['menuId'+item.uid]? false : true}}" ></image>
+                  </block>
+                </block>
+                <block wx:else>
+                  <text class = "text1">餐品不在供应时间</text>
+                </block>
+              </view>
+            </block>
+            <block wx:else></block>
+          </block>
+        </view>
+      </block>
+      </view>
+    </view>
+    <view class="button-group {{isIpx?'fix-iphonex-button':''}}"></view>
+    </scroll-view>
+  </view>
+  <view class="bottom" wx:if="{{allMenu['menuNum'] > 0}}">
+      <view class="BottomViewClass">
+        <view class="ShopCarViewClass" bindtap="burCarClick">
+          <image src="../../images/car_1.png"></image>
+          <text>{{allMenu['menuNum']}}</text>
+        </view>
+        <view class="moneyView">
+          <text class="money" style="{{typeValue == 2||typeValue == 3 ? 'height: 50px;line-height: 50px;margin-top:0px;' : ''}}">¥ {{allMenu['menuPrice']/100+mealFeeMoney/100}}
+          <!-- <block wx:if = "{{specialOfferPrice > 0 && allMenu['menuPrice'] != specialOfferPrice}}"><text style='color:#666;text-decoration: line-through;font-size: 12px;'>¥ {{specialOfferPrice/100}}</text></block> -->
+          </text>
+          <block wx:if = "{{typeValue != 2}}">
+          <text class="send">外送费¥{{shopPro.fee}}元</text>
+          </block>
+        </view>
+					<block wx:if="{{allMenu['menuPrice']/100 + mealFeeMoney/100 >=shopPro.reachFee}}">
+            <text class="GoOkClass" bindtap="btGoSend" style='background:{{color}};'>结算</text>
+          </block>
+					<block wx:elif="{{allMenu['menuNum'] > 0&(typeValue == 3|typeValue == 2)}}">
+            <text class="GoOkClass" bindtap="btGoSend">结算</text>
+          </block> 
+          <!-- <block wx:elif="{{isLogin!=1}}">
+             <button class="GoOkClass" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" style='border-radius:0;'>结算</button> -->
+           <!-- </block> -->
+           <block wx:else> 
+            <text class="GoOkClass" bindtap="btGoSend">￥{{shopPro.reachFee}}起送</text>
+          </block>
+          
+      </view>
+     <!-- <view class="button-group {{isIpx?'fix-iphonex-button':''}}"></view> -->
+    </view>
+</view>
+<view class="menuProListClass" hidden="{{isNature}}">
+      <image class = "back" src ="../../images/cha.png" bindtap = "menuProBack"></image>  
+  <view class="desc-box">
+		<image class = "goodsInformation-image" src='{{imageInformation?imageInformation:"../../images/menu/default.png"}}' mode='widthFix' style="width:120px"></image>
+	</view>
+  <view class="proListClass" scroll-y="true">
+    <view>
+      <text class = "goodsInformation-title">{{menuName}}</text>
+      <text wx:for="{{label}}" class="label">{{item}}</text>
+    </view>
+		<text wx:if="{{desc}}" class="goodsInformation-desc">产品描述</text>
+		<text wx:if="{{desc}}" class = "goodsInformation-desc">{{desc}}</text>
+	 <view>
+      <view class="proList">
+        <text wx:if="{{naturePro_.title}}" class="proName">{{naturePro_.title}}</text>
+        <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{naturePro_.items}}" wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0px' : '5px'}};{{j.isSoldOut? 'border-color:rgb(189,189,189);color:rgb(179,179,179)':''}};" bindtap="proListLiSelected_" data-info="{{j}}" data-y="{{y}}">
+          <text>{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+          <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+        </view>
+      </view>
+    </view>
+    <view wx:for="{{naturePro}}"  wx:key="uid" wx:for-item="i" wx:for-index="z">
+      <view class="proList">
+        <text class="proName">{{i.title}}</text>
+        <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0px' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" bindtap="proListLiSelected" data-info="{{i}}" data-y="{{y}}" data-z="{{z}}">
+          <text>{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+          <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+        </view>
+      </view>
+    </view>
+  <view class="proList">
+									<text class="proName groupname">{{choicesnature.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{choicesnature.items}}" wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" bindtap="choicesSelectedB" data-item="{{choicesnature}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="naturechoices">
+									<text>{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+	</view>
+  </view>
+  <view style="height:1px;background-color:#e9e9e9"></view>
+  <view class="proAddBuyCarClass">
+    <text class="money"><text style='font-size: 12px;font-weight: lighter'>¥ </text>{{naturePrice / 100}}</text>
+			<view class='groupnumber'>
+                <image style='margin-top:13px;' class="addViewClass" src="../../images/add.png" catchtap="groupnumAdd" data-info='nature'></image>
+                  <text style="float:right;margin-left:8px;margin-right:8px;line-height:50px" wx:if="{{naturenum>0}}">{{naturenum}}</text>
+                 <image  catchtap="groupnumSub" wx:if="{{naturenum>0}}" data-info='nature' style='margin-top:13px;' class="subViewClass" src="../../images/sub.png" ></image>
+      </view>
+  </view>
+    <view class="addcar" bindtap="modal_image_add_click" style="background:{{color}}">加入购物车</view>
+</view>    
+<view class="menuProListClassI" hidden="{{isGroup}}">
+    <image class = "back" src ="../../images/cha.png" bindtap = "menuProBack2"></image>  
+    <view class="desc-box">
+		<image class = "goodsInformation-image" src='{{imageInformation?imageInformation:"../../images/menu/default.png"}}' mode='widthFix' style="width:120px"></image>
+	</view>
+  <scroll-view class="proListClass" scroll-y="true">
+     <view>
+      <text class = "goodsInformation-title">{{menuName}}</text>
+      <text wx:for="{{label}}" class="label">{{item}}</text>
+    </view>
+		<text wx:if="{{desc}}" class="goodsInformation-desc">产品描述</text>
+		<text wx:if="{{desc}}" class = "goodsInformation-desc">{{desc}}</text>
+    <view class='plateNAME' wx:if="{{mainview&&groupPro[0].groupA}}">主食</view>
+    <view class="proListbg" wx:if="{{groupPro[0].groupA}}">
+      <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{groupProA.cells}}" wx:for-item="j" wx:for-index="y" wx:key="pid" style="margin-left: {{y == 0 ? '0px' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+        <text bindtap="proGroupSelected" data-info="{{j}}" data-y="{{y}}">{{j.name}}</text>
+      </view>
+    </view>
+  <view class="proListClass" style="height:{{isNatureA?'':'auto'}};margin-left:0" hidden="{{isNatureA}}">
+      <view>
+        <view class="proList">
+          <text class="proName groupname">{{naturePro_.title}}</text>
+          <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{naturePro_.items}}" wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+          <text bindtap="proListLiSelected_" data-info="{{j}}" data-y="{{y}}">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+          <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+        </view>
+      </view>
+    </view>
+    <view wx:for="{{naturePro}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+      <view class="proList">
+        <text class="proName groupname">{{i.title}}</text>
+        <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j" wx:for-index="y" wx:key="uid" style="margin-left: {{y == 0 ? '0' : '5px'}};">
+          <text bindtap="proListLiSelected" data-info="{{i}}" data-y="{{y}}" data-z="{{z}}">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+          <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+        </view>
+      </view>
+    </view>
+    <view class="proList">
+      <text class="proName groupname">{{choices.title}}</text>
+      <view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{choices.items}}" wx:for-item="j" wx:for-index="y" wx:key="uid" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+        <text bindtap="choicesSelected" data-info="{{j}}" data-y="{{y}}">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+        <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+      </view>
+    </view>
+  </view>
+  <view class='plateNAME' wx:if="{{groupProBview}}">固定搭配</view>
+  <view class="proListbg" wx:if="{{groupProBview}}">
+            <view wx:for="{{groupProB.cells}}" wx:key="pid" wx:for-item="m"  wx:for-index="q" >
+            <view class='immob'>
+              <text>{{m.name}}¥{{m.price}}</text>
+              <text>{{m.maxNum}}</text>
+            </view>
+					<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property}}">
+						<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.standard.items}}" wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+									<text bindtap="proListLiSelectedB_" data-info="{{j}}" data-y="{{y}}" data-q="{{q}}" data-name="nameB">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j"  wx:key="uid" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+											<text bindtap="proListLiSelectedB" data-info="{{i}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameB">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.choices.items}}"  wx:key="uid" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+									<text bindtap="choicesSelectedB" data-info="{{j}}" data-y="{{y}}" data-q="{{q}}" data-name="nameB">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+            </view>
+		  	</view>
+      </view>
+  <view class='plateNAME' wx:if="{{groupProCview}}">可选配料</view>
+      <view class="proListbg" wx:if="{{groupProCview}}">
+        <!-- <text class="proName">{{groupProC.title}}</text>  -->
+				<view style='display:flex;'>
+				    <text wx:for="{{groupProC.items}}" wx:for-item="t" wx:for-index="y" bindtap='change_groupc' data-item='{{t}}' data-y='{{y}}' class="underline {{t.isChecked == 1 ? 'activ':''}}">{{t.title}}</text>
+				</view>
+				<view wx:for="{{_groupc.cells}}" wx:key="pid" wx:for-item="m" wx:for-index="q">
+				<view class='immob'>
+				  <text>{{m.name}}¥{{m.price}}{{m.isSoldOut ? '(餐品售罄)':''}}</text>
+          <image style='width:20px;height:20px;' src="{{m.isChecked == 1 ? '../../images/gou.png' : '../../images/yuan.png'}}" bindtap='btn_groupc_method' data-item="{{m}}" data-info = "{{q}}" ></image> 
+					</view>
+	<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property&&m.isChecked == 1}}">
+		<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.standard.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="proListLiSelectedB_" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameC">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j" wx:key="uid" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+											<text bindtap="proListLiSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameC">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.choices.items}}"  wx:key="uid" wx:for-item="j" wx:for-index="y"  style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+									<text bindtap="choicesSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameC">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+  </view>
+				</view>
+      </view>
+  <view class='plateNAME' wx:if="{{groupProDview}}">可选加料</view>
+ <view class="proListbg" wx:if="{{groupProDview}}">
+        <!-- <text class="proName">{{groupProD.title}}</text>  -->
+				<view style='display:flex;padding:10px 0 0 0px;'>
+				    <text wx:for="{{groupProD.items}}" wx:for-item="t" wx:for-index="y" bindtap='change_groupd' data-item='{{t}}' data-y='{{y}}' class="underline {{t.isChecked == 1 ? 'activ':''}}">{{t.title}}</text>
+				</view>
+				<view wx:for="{{_groupD.cells}}" wx:key="pid"  wx:for-item="m" wx:for-index="q">
+				<view class='immob'>
+				  <text>{{m.name}}¥{{m.price}}</text>
+          	<view>
+                  <image class="addgroup" catchtap="btndroupDAdd" data-item="{{m}}"  data-y='{{q}}' class="addViewClass" src="../../images/add.png" ></image>
+                  <text hidden="{{m.num>0? false : true}}" style="float:right;margin-left:5px;margin-right:5px;margin-top:3px;">{{m.num}}</text>
+                  <image class="subViewClass" data-item="{{m}}" data-y='{{q}}' catchtap="btngroupDSub" src="../../images/sub.png" hidden="{{m.num>0? false : true}}" ></image>
+          </view>
+				</view>
+					<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property&&m.num>0}}">
+					<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname  nameii">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.standard.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="proListLiSelectedB_" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameD">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname nameiii">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j" wx:key="uid" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};">
+											<text bindtap="proListLiSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameD">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.choices.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="choicesSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameD">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+
+  </view>
+
+
+				</view>
+      </view>
+<view class='plateNAME_' wx:if="{{groupProBviewF}}">固定搭配</view>
+     <view class="proListbg" wx:if="{{groupProBviewF}}">
+        <text class="proName">{{groupProBF.title}}</text> 
+				<view  wx:for="{{groupProBF.cells}}" wx:for-item="m"  wx:key="pid" wx:for-index="q">
+				<view class='immob'>
+				  <text>{{m.name}}¥{{m.price}}</text>
+				  <text>{{m.maxNum}}</text>
+        </view>
+				<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property}}">
+				
+								<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.standard.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="proListLiSelectedB_" data-info="{{j}}" data-y="{{y}}" data-q="{{q}}" data-name="nameBF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};"  wx:key="uid">
+											<text bindtap="proListLiSelectedB" data-info="{{i}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameBF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.choices.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="choicesSelectedB" data-info="{{j}}" data-y="{{y}}" data-q="{{q}}" data-name="nameBF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+
+  </view>
+				</view>
+      </view>
+<view class='plateNAME_' wx:if="{{groupProCviewF}}">可选配料</view>
+       <view class="proListbg" wx:if="{{groupProCviewF}}">
+        <!-- <text class="proName">{{groupProCF.title}}</text>  -->
+				<view style='display:flex;padding:10px 0 0 0px;'>
+				    <text wx:for="{{groupProCF.items}}" wx:for-item="t" wx:for-index="y" bindtap='change_groupcF' data-item='{{t}}' data-y='{{y}}' class="underline {{t.isChecked == 1 ? 'activ':''}}">{{t.title}}</text>
+				</view>
+				<view wx:for="{{_groupcF.cells}}" wx:key="pid" wx:for-item="m" wx:for-index="q">
+				<view class='immob'>
+				  <text>{{m.name}}¥{{m.price}}{{m.isSoldOut ? '(餐品售罄)':''}}</text>
+          <image style='width:20px;height:20px;' src="{{m.isChecked == 1 ? '../../images/gou.png' : '../../images/yuan.png'}}" bindtap='btn_groupc_methodF' data-item="{{m}}" data-info = "{{q}}" ></image> 
+					</view>
+						<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property&&m.isChecked == 1}}">
+							<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}"  wx:for="{{m.property.standard.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="proListLiSelectedB_" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameCF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}"  wx:for="{{i.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};" wx:key="uid">
+											<text bindtap="proListLiSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameCF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}"  wx:for="{{m.property.choices.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="choicesSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameCF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+
+  </view>
+				</view>
+      </view>
+<view class='plateNAME_' wx:if="{{groupProDviewF}}">可选加料</view>
+ <view class="proListbg" wx:if="{{groupProDviewF}}">
+        <!-- <text class="proName">{{groupProDF.title}}</text>  -->
+				<view style='display:flex;padding:10px 0 0 0px;'>
+				    <text wx:for="{{groupProDF.items}}" wx:for-item="t" wx:for-index="y" bindtap='change_groupdF' data-item='{{t}}' data-y='{{y}}' class="underline {{t.isChecked == 1 ? 'activ':''}}">{{t.title}}</text>
+				</view>
+				<view wx:for="{{_groupDF.cells}}" wx:key="pid"  wx:for-item="m" wx:for-index="q">
+				<view class='immob'>
+				  <text>{{m.name}}¥{{m.price}}</text>
+           <view>
+                 <image bindtap="btndroupDAddF" data-item="{{m}}"  data-y='{{q}}' class="addViewClass" src="../../images/add.png" ></image>
+                  <text hidden="{{m.num>0? false : true}}" style="float:right;margin-left:8px;margin-right:8px;margin-top:3px;">{{m.num}}</text>
+                 <image data-item="{{m}}" data-y='{{q}}' bindtap="btngroupDSubF" class="subViewClass" src="../../images/sub.png" hidden="{{m.num>0? false : true}}" ></image>
+                 </view>
+</view>
+<view class="proListClass" style='height:auto;margin-left:0px'  wx:if="{{m.property&&m.num>0}}">
+	<view class="proList" wx:if="{{m.property.standard}}">
+									<text class="proName groupname">{{m.property.standard.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.standard.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};"  wx:key="uid">
+									<text bindtap="proListLiSelectedB_" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameDF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+								<view wx:for="{{m.property.propertys}}" wx:for-item="i" wx:for-index="z" wx:key="uid">  
+									<view class="proList">
+										<text class="proName groupname">{{i.title}}</text>
+										<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{i.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};"  wx:key="uid">
+											<text bindtap="proListLiSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameDF" >{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                      <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+										</view>
+									</view>
+								</view>
+								<view class="proList">
+									<text class="proName groupname">{{m.property.choices.title}}</text>
+									<view class="proListLi {{j.isChecked == 1 ? 'selectedProListLi' : ''}}" wx:for="{{m.property.choices.items}}" wx:for-item="j" wx:for-index="y" style="margin-left: {{y == 0 ? '0' : '5px'}};{{j.isSoldOut? 'background:#f1f1f1;color:#a0a0a0':''}};" wx:key="uid">
+									<text bindtap="choicesSelectedB" data-item="{{m}}" data-info="{{j}}" data-y="{{y}}" data-z="{{z}}" data-q="{{q}}" data-name="nameDF">{{j.name}}{{j.price > 0 ? '¥'+j.price:''}}</text>
+                  <image class="star" wx:if="{{j.nameEn==1}}" src="../../images/star.png"></image>
+									</view>
+								</view>
+  </view>
+				</view>
+      </view>
+  </scroll-view>
+   <view style="height:1px;background-color:#e9e9e9"></view>
+    <view class="proAddBuyCarClass">
+    <text class="money"><text style='font-size: 12px;font-weight: lighter'>¥ </text>{{groupPrice/100}}</text>
+	
+          	<view class='groupnumber'>
+                 <image style='margin-top:13px;' class="addViewClass" src="../../images/add.png" bindtap="groupnumAdd" data-info='group'></image>
+                  <text style="float:right;margin-left:8px;margin-right:8px;line-height:50px" wx:if="{{groupnum>0}}">{{groupnum}}</text>
+                 <image style='margin-top:13px;' class="subViewClass" src="../../images/sub.png" bindtap="groupnumSub" wx:if="{{groupnum>0}}" data-info='group'></image>
+          </view>
+  </view>
+    <view class="addcar" bindtap="group_image_add_click" style="background:{{color}}">加入购物车</view>
+</view> 
+<view class="commodityScreenClass" bindtap="hideScreen" hidden="{{isHiddenScreenStatus}}" ></view>
+<modal hidden="{{isHiddenModal}}" title="清空购物袋" confirm-color="#CAA284" confirm-text="确认" cancel-text="取消" bindcancel="buyCarClearCancel" bindconfirm="buyCarClearConfirm">确定清空购物袋？</modal>
+<modal hidden="{{isGoodsModal}}" title="提示" confirm-color="#CAA284" confirm-text="确定" cancel-text="取消" bindcancel="goodsCancel" bindconfirm="goodsCancel">请在购物袋中进行属性商品的加减</modal>
+
+<view class="commodityScreenShopCarClass" bindtap="hideShopCarScreen" hidden="{{isShopCarCommodity||allMenu['menuNum'] <1}}"></view>
+<view animation="{{animationData}}" class="menuBuyCarListClass" hidden="{{hiddenBuyCarStatus||allMenu['menuNum'] <1}}">
+  <view class="menuBuyCarListExtianClass">
+    <view class="menuBuyCarListExtianClearClass" catchtap="buyCarClear">
+     <image class="menuBuyCarListExtianClearClass" src="../../images/clear.png"></image>
+      <text class="menuBuyCarListExtianClearClass">清空购物袋</text>
+    </view>
+  </view>
+
+  <view class="menuBuyCarListFoodListClass" style="max-height: {{buyCarListMaxHeight}};">
+
+    <view wx:for="{{menuPro}}" wx:key="id" wx:for-index="z" wx:if="{{item.num > 0}}" class="listClass" style="min-height:{{item.see?'auto':'65px'}}">
+      <view class="MenuViewClass">
+        <!-- <text class="{{item.menuNature ? 'menuName' : 'menuNoProName'}}">{{item.menuName}}</text> -->
+<text class="menuNoProName" style="width:{{item.groups? 67:100}}%;height:{{item.groupsname?'55px':'65px'}}">{{item.menuName}}</text>
+      </view>
+            <text class='shouqi' bindtap='seetextornot' wx:if="{{item.groups}}" data-info='{{item}}' data-i='{{z}}'>{{item.see?'收起':'展开'}}</text>
+
+      <view class="menuEdit">
+        <image class="del" src="../../images/sub.png" data-info="{{item}}" catchtap="menuDelBuyCar"></image>
+        <image class="add" src="../../images/add.png" data-info="{{item}}" catchtap="menuAddBuyCar"></image>
+        <text class="num">{{item.num}}</text>
+       </view> 
+       <!-- <block wx:if="{{item.activityPrice > 0}}"> 
+       <text>{{item.activityPrice}}*{{item.num}}</text> 
+          <text class="menuMoney">¥<text>{{(item.activityPrice * item.num)/ 100}}</text></text> 
+       </block>  
+       <block wx:else>  -->
+           <text class="menuMoney">¥<text>{{(item.price * item.num)/ 100}}</text></text> 
+      <!-- </block>          -->
+     
+      <block wx:if="{{item.groups&&item.see }}">
+        <text class="menuPro">{{item.groupsname}}</text>
+      </block>
+      <block wx:if="{{item.menuNature }}">
+        <text class="menuPro">{{item.menuNature.natureName}}</text>
+      </block>
+    </view>
+    <view class = "meailFee">
+        <text class = "meailFee_name">餐盒费</text>
+        <text class = "meailFee_price">¥ {{mealFeeMoney/100}}</text>
+    </view>
+  </view>
+</view>
+<view class="commodityScreenClass" bindtap="hideImageScreen" hidden="{{isHiddenImageStatus}}" style='height:100%;'></view>
+<view class = "goodsInformation" hidden='{{isGoodsInformation}}'>
+  <view class="desc-box">
+    <image class = "goodsInformation-image" src='{{imageInformation?imageInformation:"../../images/menu/default.png"}}' mode='widthFix' style="width:120px"></image>
+    <view>
+      <text class = "goodsInformation-title">{{nameHH}}</text>
+      <text wx:for="{{label}}" class="label">{{item}}</text>
+    </view>
+    <text class="goodsInformation-desc">产品描述</text>
+    <text class = "goodsInformation-desc">{{desc}}</text>
+  </view>
+
+    <view class="information-car">
+       <text>￥{{priceHH}}</text>
+       <view class="menuEdit">
+        <image class="del" src="../../images/sub.png" catchtap="menuDelBuyCarInfo" wx:if="{{numHH>0}}"></image>
+        <image class="add" src="../../images/add.png" catchtap="menuAddBuyCarInfo"></image>
+        <text class="num" wx:if="{{numHH>0}}">{{numHH}}</text>
+       </view> 
+    </view>
+    <button class="information-buycar" catchtap="carsHH" style="background:{{color}}">加入购物车</button>  
+    <image class = "goodsInformation-clear" src='../../images/cha.png' bindtap='hideImageScreen'></image>
+</view>
+<view class = "commodityScreenClass" hidden='{{isNotAddress_}}'></view>
+<view class = "notAddress_" style='border-radius:10px;' hidden='{{isNotAddress_}}'>
+    <text class = "title_">提示</text>
+    <view class = "content_">
+       <text>小程序将申请获取您的信息用于快捷登录，请选择[确认授权]</text>
+    </view>
+      <button size="default" class="confirm_" catchtap="cancelBox">取消</button>
+    <button class = "confirm_" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确认</button>
+    <view style="clear:both;"></view>
+</view>
+<view class="shopDetail" hidden="{{shopDetailView}}" style="height:{{isIpx?sy-310:sy-250}}px">
+     <view class="part">
+        <view>门店告示</view>
+        <text>{{shopPro.announcement}}</text>
+     </view>
+     <view class="part">
+        <view>配送</view>
+        <text>满{{shopPro.reachFee}}元起送</text>
+        <text>配送费{{shopPro.fee?shopPro.fee:0}}元</text>
+        <text>由顺丰提供配送服务，距门店{{shopPro.deliveryRanges[0].radius}}m范围内起送</text>
+        <text>(配送范围受地区、天气等多方因素影响，以实际可配送距离为准)</text>
+     </view>
+     <view class="part">
+        <view>门店信息</view>
+        <view class="Btime">营业时间：
+          <block wx:for="{{shopPro.businessTimes}}">
+            <text>{{' '+item.beginTime}}-{{item.endTime}} </text>
+          </block>
+        </view>
+        <text>门店电话：{{shopPro.phoneNumberList[0]}}</text>
+        <text>门店地址：{{shopPro.storeAddress}}</text>
+     </view>
+</view>
+<view class="loading" hidden="{{isLoading1&isLoading2}}">
+   <image src="../../images/loading.gif"></image>
+</view>
+<view hidden="{{isBusy}}" class="busyBox">茶饮制作繁忙</view>

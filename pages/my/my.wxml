@@ -1,0 +1,90 @@
+<!--pages/my/my.wxml-->
+<view style="background:#f4f3f3;overflow:hidden">
+<view class="head">
+  <image src="../../images/my/top_bg.png" style="width:{{sw}}px;height:{{(sw*439)/1087}}px"></image>
+  <view class="top_info">
+    <view class="top">
+      <view class="left">
+        <!-- <image src='../../images/touxiang.png'></image> -->
+        <view class="image">
+          <open-data type="userAvatarUrl"></open-data>
+        </view>
+      </view>
+      <view class="right">
+        <view class="Rleft">
+          <text class="name">{{memberData.name?memberData.name:'茶理会员'}}</text>
+          <text class="mobile">{{memberData.otherMobile}}</text>
+          <text class="leve" wx:if="{{isVka==1}}">{{islogin==1?levelName:'无等级'}}</text>
+        </view>
+        <view class="Rright" bindtap="go_huiyuanma"  wx:if="{{isVka==1}}">
+          <image class="ma"  src='../../images/my/ma.png'></image>
+          <view class="qy"><text>会员二维码</text> <image style="width:5px;height:9px" src='../../images/07_icon_right.png'></image></view>
+        </view>
+      </view>
+    </view>
+    <view class="bottom">
+      <view class="bottomTop" bindtap="go_mall">
+        <image src="../../images/my/coin.png"></image>
+        <text class="num">{{memberData.point?memberData.point:0}}</text>
+        <text class="title">灵气商城</text>
+      </view>
+      <view class="bottomTop" bindtap="go_mycoupons">
+       <image src="../../images/my/coupon.png"></image>
+        <text class="num">{{CouponCount}}</text>
+        <text class="title">茶理券</text>
+      </view>
+      <view class="bottomTop" bindtap="go_recharge">
+        <image src="../../images/my/wallet.png"></image>
+        <text class="num">¥{{memberData.balance?memberData.balance:0}}</text>
+        <text class="title">钱包</text>
+    </view>
+  </view>
+  </view>
+</view>
+<view bindtap="go_equits" class="leve_"  wx:if="{{isVka==1}}">
+		    <view class="levelName">Lv.{{levelNum}} {{levelName}}</view>
+        <text style='font-size:24px;color:#fff;margin-left: 23px;font-weight: 430;'>{{nowExperience}}</text><text style='color:#fff;font-size:18px'>{{upperExperience ? "/"+upperExperience : ""}}</text>
+				<progress percent="{{percent_}}" activeColor="#73bba8" backgroundColor="#eee" class="progress"/>
+				<view wx:if="{{nextLevelName}}" style='width:100%;margin-top:6px;font-size:11px;color:#333;margin-left:23px'>再积{{upperExperience - nowExperience}}灵气值可升级为下一等级</view>
+        <view wx:else style='width:100%;margin-top:6px;font-size:11px;;margin-left:23px'>{{islogin==1?'您已为最高等级':'您目前无等级！'}}</view>
+        <image src="../../images/my/gift.jpg" class="giftImg"></image>
+</view>
+<view class="service_box" wx:if="{{isVka==1}}">
+   <view class="box-title">
+     <text class="line"></text>
+     <text class="modle_title">我的服务</text>
+   </view>
+   <view class="serviceLogoBox">
+     <view wx:for="{{serviceLogo}}" data-item="{{item}}" bindtap='go_page'>
+       <image src="{{item.logo}}"></image>
+       <text>{{item.name}}</text>
+     </view>
+   </view>
+</view>
+</view> 
+<view class = "commodityScreenClass_" hidden='{{isNotAddress_}}'></view>
+<view class = "notAddress_" style='border-radius:10px;' hidden='{{isNotAddress_}}'>
+    <text class = "title_">提示</text>
+    <view class = "content_">
+       <text>小程序将申请获取您的信息用于快捷登录，请选择[确认授权]</text>
+    </view>
+     <button size="default" class="confirm_" bindtap="cancelBox">取消</button>
+    <button class = "confirm_" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">确认</button>
+    <view style="clear:both;"></view>
+</view>
+<view class = "commodityScreenClass" hidden='{{IsshowCompleteBox}}'></view>
+<view class='white_back' hidden='{{IsshowCompleteBox}}'> 
+		 <view class='white_back_text'>
+				<image src='../../images/POP_top.png'></image>
+		    <image src='../../images/home_ID.png'></image>
+				<view> 
+				  <text style='color:#000;font-size:17px;margin-bottom:20px;'>福利提醒</text>
+					<text style='margin-bottom:7px;'>您的会员信息还不完整哦！</text>
+					<text style='margin-bottom:7px;'>这将直接影响您的专属福利是否能顺利到达</text>
+					<text style='margin-bottom:7px;'>为了您的权益请尽快完善您的会员信息</text>
+					<text>完善后即可享受招牌饮品五折券</text>
+					<navigator url='../person/person' style='height:45px;line-height:45px;font-size:15px;width:95%;margin-left:2.5%;border-radius: 8px;margin-top: 10px;background-color: rgb(202,162,132);color: #fff;text-align:center'>即刻去完善我的信息</navigator>
+				</view>
+		 </view>
+		 <image src='../../images/cha.png' bindtap='cha'></image>
+</view>

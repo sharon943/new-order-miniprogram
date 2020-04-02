@@ -1,0 +1,23 @@
+<!--pages/city/city.wxml-->
+<view class="bgBox">
+  <view class="head">
+    <view class="name" bindtap="choiceprovince">
+       <text class="{{isCity==1?'lineactive':''}}">{{provincename?provincename:'省份'}}</text>
+    </view>
+    <view class="name" bindtap="choice">
+      <text class="{{isCity==2?'lineactive':''}}">{{cityname?cityname:'城市'}}</text>
+    </view>
+    <view class="name">
+      <text class="{{isCity==3?'lineactive':''}}">{{disname?disname:'区域'}}</text>
+    </view>
+  </view>
+<view class="cityName" wx:if="{{isCity==1}}" wx:for="{{listProvince}}" wx:key="provinceId">
+   <view data-item="{{item}}" bindtap="choiceCity">{{item.provinceName}}</view>
+</view>
+<view class="cityName" wx:if="{{isCity==2}}" wx:for="{{listcity}}" wx:key="cityId">
+   <view data-item="{{item}}" bindtap="choiceDis">{{item.cityName}}</view>
+</view>
+<view class="cityName" wx:if="{{isCity==3}}" wx:for="{{xianData}}" wx:key="districtId">
+<view data-item="{{item}}" bindtap="go_back">{{item.name}}</view>
+</view>
+</view>

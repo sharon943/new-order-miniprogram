@@ -1,0 +1,5 @@
+<!--pages/member/about/about.wxml-->
+<view style="width:100%">
+   <image style="width:100%;height:{{imgHeight}}px;" bindload="imageLoad" src="https://merchants.oss-cn-hangzhou.aliyuncs.com/409/store/d463c4a7005437a17c7a2e00ea42617f.jpg"></image>
+</view>
+

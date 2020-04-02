@@ -1,0 +1,36 @@
+<view class="bigBox" style='min-height:{{systheight}}px;overflow:scroll'>
+ <view class="receiverBox">
+    <view class="titletop">收货地址</view>
+    <view style="color:#333;margin-top:10px">{{address.receiverAddress}}{{address.appendReceiverAddress}}</view>
+    <view style="color:#a0a0a0;">{{address.receiverName}} {{address.receiverPhone}}</view>
+ </view>   
+ <view class="shopBox">
+   <view class="titletop">当前地址可配送门店</view>
+  <block wx:if="{{shopData.length>0}}">
+  <view class="shop" wx:for="{{shopData}}">
+  <view class="left">
+  <view class="title"><text>{{item.storeName}}</text>
+  <text class="status" wx:if="{{item.businessStatus[0].busy&&item.businessStatus[3].busy}}">门店忙碌中</text>
+  </view>
+  <text class="distance">距离您{{item.distance}}m</text>
+  <text class="storeAddress">{{item.storeAddress}}</text>
+    <view class="storeAddress" style="margin-bottom:20px">营业时间：
+     <block wx:for="{{item.businessTimes}}" wx:for-item="row">
+        <text>{{' '+row.beginTime}}-{{row.endTime}} </text>
+      </block>
+  </view>
+  </view>
+  <view class="right" data-item="{{item}}" bindtap="gomenu">
+    <view class="order" >去下单</view>
+  </view>
+   
+  <view class="clear"></view>
+  </view>
+  
+  </block>
+  <block wx:else>
+  <view class="noneshop">附近无门店</view>
+  </block>
+ </view>
+  </view>
+  

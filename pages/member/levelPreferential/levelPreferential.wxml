@@ -1,0 +1,27 @@
+<!--pages/levelPreferential/levelPreferential.wxml-->
+<view class='bgBox'>
+<view class='scroll_view'>
+  <scroll-view class="scroll-view_H" scroll-x >
+    <view bindtap='clickItem'   wx:for="{{levelData}}" class="one {{item.isSel == 1 ? 'topnav' : ''}}" data-item="{{item}}" >
+      <image src="{{item.isSel == 1?item.logo:item.logo_}}"></image>
+      <text >{{item.levelName}}</text>
+      <text class='zhu' wx:if="{{item.isSel == 1}}" ></text>
+    </view>
+    <!-- <view class='one' id="red"  >白金卡</view>
+    <view class='one' id="yellow" >黑金价</view> -->
+  </scroll-view>
+ 
+  </view>
+   <view style='height:1px;background-color:#eee;'></view>
+  <view class='topView'>
+  <image src='{{itemData.background}}'></image>
+  <rich-text style='word-break:break-all;' class='richtext' nodes="{{itemData.privilegeText}}" bindtap="tap"></rich-text>
+
+</view>
+  
+  </view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="toast" hidden='{{isToast}}'>
+    <text class = "content">{{toastData}}</text>
+    <view style="clear:both;"></view>
+</view>

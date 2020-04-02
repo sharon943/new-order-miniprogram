@@ -1,0 +1,5 @@
+<!--pages/usernote/usernote.wxml-->
+
+<textarea bindinput="input" value="{{note}}"></textarea>
+<text wx:if="{{typevalue==2}}" wx:for="{{type}}" bindtap="choose" data-info="{{index}}" style="border-color:{{index==aciveindex?color:'#ccc'}};color:{{index==aciveindex?color:'#ccc'}}">{{item}}</text>
+<view class="button" bindtap="finish" style="background:{{color}}">完成</view>

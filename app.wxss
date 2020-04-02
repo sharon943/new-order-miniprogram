@@ -1,0 +1,44 @@
+@import 'utils/weui.wxss';
+.commodityScreenClass {
+    width: 100%;height: 100%;position: fixed;background: #000;opacity: 0.4;overflow: hidden;z-index: 10;color: #fff;top: 0px;right: 0px;bottom: 0px;left: 0px;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+.toast{
+  position: fixed;top: 80%;left: 10%;width: 80%;text-align: center;
+}
+.fix-iphonex-button {
+  height:68px;
+  width: 100%;
+  background: #fff;
+}
+.fix-iphonex-button::after {
+  content: ' ';
+  bottom: 0!important;
+  height: 68rpx!important;
+}
+.toast .content{
+  font-size: 14px;color: white;padding: 5px 15px;text-align: center;background: rgba(120, 108, 104, 0.8);border-radius: 10px;
+}
+.notAddress_{
+  width: 80%;margin-left: 10%;background: white;position: fixed;top: 30%;z-index: 20;
+}
+.title_{
+  width: 100%;height: 40px;text-align: center;font-size: 15px;line-height: 40px;display: block;float: left;color: #333333;
+}
+.content_{
+  width: calc(100% - 30px);margin-left: 15px;float: left;padding-top: 5px;padding-bottom: 5px;
+}
+.content_ text{
+  display: block;float: left;font-size: 14px;color: #333333;
+}
+.confirm_{
+  width: calc((100% - 30px) / 2);margin-left: 10px;height: 40px;text-align: center;font-size: 16px;display: block;float: left;line-height: 40px;margin-bottom: 15px;margin-top: 10px; background: rgb(202,162,132);border: none;
+  color: white;
+}
+button::after{
+   border: none;
+}

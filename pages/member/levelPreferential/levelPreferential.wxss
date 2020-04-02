@@ -1,0 +1,60 @@
+/* pages/levelPreferential/levelPreferential.wxss */
+.bgBox{
+  border-top: 1px solid #eeeeee;
+}
+.scroll_view{
+ width: calc(100% - 15px);
+overflow: hidden;
+white-space: nowrap; 
+margin-left: 15px;
+}
+.scroll-view_H{
+  height: 43px;
+  /* border-bottom: 1px solid #eeeeee; */
+  width: auto;
+  overflow: hidden;
+
+  
+}
+.topView{
+  margin: 0px 15px; width: calc(100% - 30px);margin-bottom: 80px;
+}
+.topView >image{
+  margin: 15px 0;
+  width: calc(100vw - 30px);
+  height: calc((100vw - 30px)*0.57);
+  border-radius:10px;
+box-shadow:0 0 15px #eee;
+
+}
+.richtext{
+
+   width: 100%;color:#575757;font-size: 13px;
+  
+}
+.one{
+  position: relative;
+  width: 70px;display: inline-block;margin-right: 5px;height: 25px;line-height: 25px;font-size: 13px;color: #c9c9c9;margin-top: 9px;
+}
+.one image{
+  width: 25px;height: 25px;position: absolute;top:0px;left:0
+}
+.one text{
+  margin-left: 25px
+}
+.name{
+  float: left;
+}
+.one text.zhu{
+  width: 5px;background-color: rgb(164,60,50) ;height: 25px;color: #fff ;position:absolute;
+top:0px;right:0px;border-radius: 10px;
+}
+.topnav{
+  color: #575757 !important;background: rgb(244,232,231);
+}
+
+::-webkit-scrollbar{
+width: 0;
+height: 0;
+color: transparent
+}

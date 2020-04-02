@@ -1,0 +1,13 @@
+<!--pages/member/wallet/wallet.wxml-->
+<view>
+  <image class="card" src="{{img}}" mode="aspectFill"></image>
+  <text class="balanceText">可用余额</text>
+  <text class="blance">¥ <text>{{balance}}</text></text>
+  <navigator url='../../reCharge/reCharge'>立刻充值</navigator>
+  <view wx:for="{{helpData}}">
+    <view class='model' data-item="{{item}}" bindtap='go_page'>
+			 <text style="margin-left:15px;font-size:15px;color:#333333">{{item.name}}</text>
+       <image style="width:8px;height:13px;margin-top:20px;" src='../../../images/my/right.png'></image>
+		</view>
+  </view>
+</view>

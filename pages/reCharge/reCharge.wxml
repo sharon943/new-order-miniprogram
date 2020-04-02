@@ -1,0 +1,31 @@
+<view class='bgbox' style="height:{{isIpx?sysHeight-102:sysHeight-79}}px">
+<view class='top'>
+<image src="{{memberData.levelImg}}"></image>
+<view>
+<!-- <text class='cardNo'>{{memberData.levelName}}</text> -->
+<text class='cardNo'>当前余额</text>
+<text class='amount'>￥{{memberData.balance}}</text>
+</view>
+</view>
+<view class='middle'>
+    <text class='title'>金额</text>
+    <view class='taocan'>
+      <view bindtap='changeTaoCan' wx:for='{{taocanList}}'  class="detail {{item.isSel == 1 ? 'topnav' : ''}}" data-item="{{item}}" >
+        <view style='margin-left:0px;margin-right:0px;margin-bottom:0px' class="{{item.type == 4? 'money' : ''}}">￥{{item.amount}}</view>
+        <view style='' wx:if="{{item.type==4}}" class='tishi'>首充福利</view>
+      </view>
+    </view>
+    <view style='margin-top:10px' class='title'>
+        <text>充值说明：</text>
+        <text>{{give}}</text>
+    </view>
+      <button bindtap="btn_submit" class="bottom">立即充值</button>
+</view>
+
+
+</view>
+<view class="toast" hidden='{{isToast}}'>
+    <text class = "content">{{toastData}}</text>
+    <view style="clear:both;"></view>
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>

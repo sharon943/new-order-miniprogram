@@ -1,0 +1,9 @@
+<!--pages/levelPreferential/levelPreferential.wxml-->
+<view class='bgBox'>
+   <rich-text style='word-break:break-all;' class='richtext' nodes="{{Agreement}}"></rich-text>  
+</view>
+<loading hidden="{{hiddenLoading}}">正在加载</loading>
+<view class="toast" hidden='{{isToast}}'>
+    <text class = "content">{{toastData}}</text>
+    <view style="clear:both;"></view>
+</view>

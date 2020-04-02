@@ -1,0 +1,17 @@
+<!--pages/member/changepwd/changepwd.wxml-->
+<block wx:if="{{type==1}}">
+    <view class="bgBox" style="height:{{systheight}}px">
+      <text class="title">请输入当前交易密码</text>
+      <view class="inputbox">
+         <input value="" bindinput="inputPlateNumber" maxlength="6" type="number"></input>
+         <view class="Lbox">
+          <text>{{pwd[0]}}</text>
+          <text>{{pwd[1]}}</text>
+          <text>{{pwd[2]}}</text>
+          <text>{{pwd[3]}}</text>
+          <text>{{pwd[4]}}</text>
+          <text>{{pwd[5]}}</text>
+         </view>
+      </view>
+    </view>
+</block>

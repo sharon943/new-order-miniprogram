@@ -1,0 +1,54 @@
+
+<!-- <view class="bgbox {{idFlag == 'bleft' ? 'bgbox_' : ''}}" style='min-height:{{systheight}}px;overflow:scroll'> -->
+<view class="bgbox" style='min-height:{{systheight}}px;overflow:hidden'>
+<view class='progress coupons' >
+<view class='top' >
+<view wx:for="{{type}}" class="one" data-item="{{item}}" bindtap='choice'>
+<view style='display:initial' class="name {{item.isSel == 1 ? 'topnav' : ''}}">{{item.name}}</view>
+<view class='zhu' wx:if='{{item.isSel==1}}' ></view>
+<!-- <view wx:if='{{item.isSel==1}}' class='line'></view> -->
+</view>
+</view>
+<view wx:if="{{isShow==1}}" style='margin-top:50px'>
+<!-- <image src='../../imgs/coupon_empty.png'></image> -->
+<image src="../../images/coupon/imgno.png" style="height:{{(sysWidth-80)*0.73}}px;width:{{sysWidth-80}}px;margin-left: 40px;margin-top: 40px;"></image></view>
+<view class='bg'  wx:for="{{couponPro}}" wx:if="{{isShow==0}}" data-item="{{item}}">
+<view class="model">
+<view class="modelOne">
+<view class="left">
+<text class="title">{{item.couponName? item.couponName:item.name }}</text>
+<!-- <text class="tiaojian">不可购买</text> -->
+</view>
+<view class="right">
+<image src="{{item.url?item.url:moimg}}"></image>
+</view>
+</view>
+<view class="modelTwo">
+<view class="left"><text>{{item.coupon.bTime?item.coupon.bTime:item.bTime }}至{{item.coupon.eTime?item.coupon.eTime:item.eTime}}</text></view>
+<view class="right" data-item="{{item}}" bindtap='check_detail'><text>查看使用限制</text><image src="../../images/menu-down.png"></image></view>
+</view>
+<view class="meng" wx:if="{{idFlag != 'bleft'}}"></view>
+</view>
+</view>
+</view>
+</view>
+<view class = "commodityScreenClass" hidden='{{isNotAddress_}}' catchtouchmove="{{true}}" bindtap="clear"></view>
+<view class = "xianzhi"  hidden='{{isNotAddress_}}' bindtouchmove="{{true}}">
+ <view class="model" style="box-shadow: 1px 1px 3px #cccccc;">
+<view class="modelOne">
+<view class="left">
+<text class="title">{{chaPro.couponName?chaPro.couponName:chaPro.name}}</text>
+<!-- <text class="tiaojian">不可购买</text> -->
+</view>
+<view class="right">
+<image src="{{chaProurl?item.url:moimg}}"></image>
+</view>
+</view>
+<view class="modelTwo">
+<view class="left" style="width:100%"><text >{{chaPro.coupon.startTime?chaPro.coupon.startTime:chaPro.beginTime}}至{{chaPro.coupon.endTime?chaPro.coupon.endTime:chaPro.endTime}}</text></view>
+</view>
+</view>
+  <text style="margin-top: 9px;display: block;width: 100%;text-align: center;font-size: 14px;color: #333333;margin-bottom:20px">有效期至:{{chaPro.coupon.endTime?chaPro.coupon.endTime:chaPro.endTime}}</text>
+  <view style="width:calc(100% - 50px);background-color:#eeeeee;height:1px;margin-left:25px"></view>
+  <view style="margin:20px;width:calc(100% - 40px);max-height:200px;overflow:scrool;"><rich-text style="font-size:14px;color:#333" nodes="{{chaPro.remark}}"></rich-text></view>
+</view>

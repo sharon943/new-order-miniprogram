@@ -1,0 +1,8 @@
+<!--pages/help/help.wxml-->
+<view wx:for="{{helpData}}" wx:for-index="i">
+<view class='model' data-item="{{item}}" bindtap='go_page'>
+		   <image src='{{item.icon}}' style="{{i==2?'width:17px;margin-left: 3px;':''}}px"></image>
+			 <text>{{item.name}}</text>
+       <image src='../../images/my/right.png'></image>
+		</view>
+</view>

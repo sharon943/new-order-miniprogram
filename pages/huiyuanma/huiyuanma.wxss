@@ -1,0 +1,131 @@
+/* pages/huiyuanma/huiyuanma.wxss */
+.input-box{
+  border-top: 1px solid #eee;
+}
+.erweima{
+	margin-top:30px;
+	}
+.erweima canvas{
+	margin-left: calc(50% - 110px)
+}
+.refresh{
+  position:fixed;
+right:10px;
+top:10px;
+width:30px;
+height:30px;
+
+}
+.tiaoxingma canvas{
+	margin:0 auto;
+}
+.tiaoxingma{
+	margin-top: 5px;
+}
+.tiaoxingma text{
+  margin: -105px auto 0;display:block;
+text-align:center;
+}
+.bottom{
+	position: fixed;bottom: 0;left: 0;width: 100%;text-align: center;color:#c9c9c9 ;display:block;
+font-size: 16px
+
+}
+canvas{
+  height:220px;
+  width: 320px
+}
+.Vcards{
+width:100%;
+height:35px;
+margin:35px auto 0;
+/* display:flex; */
+/* justify-content:space-between; */
+}
+
+.down{
+	width:15px;
+height:9px;
+/* position: absolute;right:40px;top:12.5px */
+
+}
+.money{
+	line-height:35px;color: #575757
+}
+.showcards2{
+	background:#fff;margin:0;width:100%;position:fixed;left:0;height:215px;display:block;box-shadow:0 0 15px 1px rgba(0,0,0,0.1);z-index:9999997;bottom: 0
+
+
+}
+.kabao{
+  height: 165px
+}
+.vcard_{
+  height: 55px;border-bottom:1px solid #f7f7f7;
+
+}
+.backGround{
+  width:70px;
+height:35px;
+margin-top:10px;
+
+border-radius:5px;
+margin-left:5px;
+box-shadow:0 0 5px #eee;
+
+}
+.title{
+  color:#575757;
+font-size:13px;
+line-height:55px;
+text-align:left;
+width:200px;
+margin-left:15px;
+
+
+}
+.topvcard{
+height:50px;
+color:#575757;
+font-size:16px;
+line-height:50px;
+border-bottom:1px solid #f7f7f7;
+}
+.topvcard text{
+  margin-left: 15px
+}
+.bgTitle{
+  
+  font-size: 15px;
+}
+/* .normalVcards{
+  margin-bottom: 50px
+}
+.xVcards{
+  margin-bottom: 130px
+}
+.fiveVcards{
+  margin-bottom: 20px
+} */
+.showcards3{
+  height: 160px
+}
+kabao3{
+  height: 110px;
+}
+.cha{
+  height:15px;
+width:15px;
+float:right;
+margin-top:17px;
+margin-right:15px;
+
+padding-left:20px;
+
+}
+.showcards4{
+  height: 270px
+}
+.kabao4{
+  height: 220px;
+}

@@ -1,0 +1,22 @@
+/* pages/city/city.wxss */
+.head{
+  height: 35px;border-bottom: 1px solid #f2f2f2;margin-top: 10px
+}
+.name{
+  height: 30px;
+  line-height: 30px;
+  margin-left: 15px;
+  float: left;width: 100px;overflow: hidden
+}
+.lineactive{
+border-bottom:2px solid #c8ad84;
+}
+.cityName{
+  margin-top: 15px;width: calc(100% - 30px);margin-left: 15px;
+}
+.cityName view{
+  height: 35px;
+line-height: 35px;
+font-size: 14px;color:#333333;
+
+}

@@ -1,0 +1,28 @@
+<!--pages/member/RechargeRecord/RechargeRecord.wxml-->
+<block wx:if="{{recordData.length<1}}">
+  <view class="noRecord">
+    <image src="../../../images/my/noRecord.png"></image>
+    <text>没有记录</text>
+  </view>
+</block>
+<block wx:else>
+    <view wx:if='{{isShow != 1}}' class='box'>
+        <view class='whole' wx:for="{{recordData}}" wx:key="{{item.transId}}" bindtap="consDetails" data-item="{{item}}">
+            <view class='title'>消费{{item.total}}元</view>
+            <view class='exp-text'>{{item.storeName}}</view>
+            <view class='exp-text'>
+              <text>{{item.created}}</text> <!--消费时间-->
+            </view>
+        </view>
+    </view>
+        <view wx:if='{{isShow == 1}}' class='box'>
+        <view class='whole'  bindtap="reChargeDetails" wx:for="{{recordData}}" wx:key="{{item.transId}}" data-item="{{item}}">
+            <view class='title'>充值{{item.total}}元</view>
+            <view class='exp-text'>{{item.storeName}}</view>
+            <view class='exp-text'>
+              <text>{{item.created_}}</text>
+            </view>
+        </view>
+    </view>
+
+</block>

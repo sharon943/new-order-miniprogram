@@ -1,0 +1,63 @@
+/* pages/addAddress/addAddress.wxss */
+.bgBox{
+  float: left;
+}
+.pClass{
+  margin-top:5px;
+}
+.add{
+  width: 100%;height: 183px;background: white;
+}
+
+.inputView{
+  width: calc(100% - 16px);margin-left: 16px;line-height: 45px;height: 45px;border-bottom: 1px solid #eeeeee;float: left;background: white;color:#333333;
+}
+.inputView text{
+  display: block;float: left;width: 70px;font-size: 14px;color: #333333;line-height: 40px;
+}
+.inputView input{
+  width: calc(100% - 80px);line-height: 45px;height: 45px;font-size: 14px;color:#333333;
+}
+
+.inputView input ::placeholder{
+  font-size: 14px;color: #cccccc;
+}
+.city{
+   width: calc(100% - 16px);margin-left: 16px;line-height: 45px;height: 45px;border-bottom: 1px solid #eeeeee;float: left;background: white;color:#333333;
+}
+.city .name{
+  display: block;float: left;width: 70px;font-size: 14px;color: #333333;line-height: 45px;
+}
+.city .address{
+  width: calc(100% - 110px);line-height: 45px;height: 45px;font-size: 14px;color: #333333;float: left;
+}
+.city image{
+  width: 11px;height: 18px;float: right;margin-top: 11px;margin-right: 20px;
+}
+
+.editAdress{
+
+  height: 44px;float: left;width: 45%; background: rgb(202,162,132);text-align: center;line-height: 44px;color: #fff;font-size: 16px;border-radius: 3px;
+}
+.editAdress::after{
+  content: none;
+}
+.bottom{
+  position: fixed;
+  display: flex;
+  bottom: 20px;
+  justify-content: space-between;
+  width: 80%;
+margin-left: 10%;
+
+}
+.editAdressOne{
+  width: 100%
+}
+.address ::placeholder{
+   font-size: 14px;color: #cccccc;
+}
+.del{
+  height: 44px;float: left;width: 45%; text-align: center;line-height: 44px;color: #333333;font-size: 16px;border-radius: 3px;
+  background-color: #e7e7e7 ;
+}

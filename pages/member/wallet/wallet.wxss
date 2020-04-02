@@ -1,0 +1,31 @@
+/* pages/member/wallet/wallet.wxss */
+.card{
+  width: 85%;margin:20px auto;display:block;height: 200px;border-radius: 15px;
+}
+navigator{
+  width: 120px;height: 45px;line-height: 45px;text-align: center;color:#fff;
+  background: rgb(42, 45, 46);font-size: 14px;border-radius: 0;display: block;margin: 0 auto 50px;
+}
+.balanceText{
+  width: 100%;text-align: center;font-size: 13px;display: block;
+}
+.blance{
+  width: 100%;text-align: center;font-size: 14px;font-weight: bold;display: block;margin: 15px 0;
+}
+.blance text{
+  font-size: 28px
+}
+.navigator-hover {
+color: #fff;
+background-color: rgb(42, 45, 46);
+}
+.model{
+	height:54px;margin:5px 24px 0;display: flex;border-bottom: 1px solid #f6f5f5;
+}
+.model image{
+	width: 22px;height:22px;margin-top:12.5px;margin-right:10px;
+}
+.model text{
+  line-height: 54px;height: 54px;display: block;font-size: 15px;color:#333333;margin-left: 15px;overflow: hidden;text-overflow: ellipsis;width:80%;
+white-space:nowrap;
+}
